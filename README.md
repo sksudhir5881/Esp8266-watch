@@ -1,63 +1,89 @@
-# ⌚ SK Smart Watch v1.6 (Pro Edition)
+# SK Smart Watch Firmware (v2.0)
 
-**Developed by:** Sudhir (SK Project)  
-**Version:** v1.6 (Stable)  
-**Platform:** ESP8266 (NodeMCU / Wemos D1 Mini)
+[![Platform](https://img.shields.io/badge/Platform-ESP8266%20%2F%20ESP32-blue)](https://arduino.cc)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-## 📝 Description
-This is a professional DIY Smartwatch project featuring a clean UI, real-time weather updates, stopwatch with milliseconds, and a fun decision-maker tool. The code is secured with Hex encoding for privacy.
+A custom, feature-rich smartwatch firmware built for ESP8266 (NodeMCU/D1 Mini) and ESP32 microcontrollers. This project features a clean UI, weather integration, games, and utility tools on a 128x64 OLED display.
 
-## 🔥 Features
-- **🕒 Accurate Clock:** Syncs time via Internet (NTP) with centered Date display.
-- **☁️ Live Weather:** Real-time Temperature & Condition updates (Open-Meteo API).
-- **⏱️ Stopwatch:** Precise timing with format `MM:SS:ms`.
-- **🎲 Decision Maker:** Randomly answers your questions (Yes/No/Maybe).
-- **📡 OTA Update:** Update firmware wirelessly without connecting cables.
-- **🔋 Battery Monitor:** Shows battery percentage on the main screen.
-- **🔒 Secured Core:** Name and branding are Hex Encoded.
+## 🚀 Features
 
-## 🛠️ Hardware Required
-1. **ESP8266 Board** (NodeMCU or Wemos D1 Mini)
-2. **OLED Display** (0.96 inch I2C SSD1306)
-3. **Push Button** (1x)
-4. **LiPo Battery** (3.7V)
-5. **Connecting Wires**
+* **Clock & Weather:**
+    * NTP Time Synchronization.
+    * Live Weather & Temperature (via Open-Meteo API).
+    * Sunrise & Sunset Times.
+    * **New in v2.0:** Daylight Duration Tracking.
+    * Moon Phases calculation.
+* **Menu System:** Smooth navigation with intuitive icons.
+* **Utility Apps:**
+    * **Stopwatch:** Counts minutes, seconds, and milliseconds.
+    * **Wi-Fi Meter:** Visual signal strength analyzer.
+    * **Flashlight:** Turns the screen white for emergency light.
+    * **Julian Date:** Displays current day of the year.
+    * **Day Stats:** View history (Sunrise, Sunset, Temp, Duration) for the last 3 days.
+* **Games:**
+    * **Dice Roll:** Digital 6-sided dice.
+    * **Coin Toss:** Heads or Tails simulation.
+* **System:**
+    * **OTA Updates:** Update firmware wirelessly.
+    * **Battery Monitoring:** Visual percentage readout.
+    * **Deep Sleep:** Automatic screen timeout to save power.
 
-## 🔌 Circuit Diagram
-Here is the connection layout:
+## 🛠 Hardware Required
 
-```text
-       +-------------------------+
-       |   ESP8266 (NodeMCU)     |
-       |                         |
-       |             3.3V Pin +--+---------> OLED VCC
-       |                  GND +--+----+----> OLED GND
-       |                      |  |    |
-       |          (SCL) D1 Pin+--+----+----> OLED SCL
-       |          (SDA) D2 Pin+--+----+----> OLED SDA
-       |                      |
-       |          (Btn) D5 Pin+--+---------> [ Push Button ]
-       |                      |  |                 |
-       |                      |  +-----------------+
-       |                      |
-       |  (Bat Monitor) A0 Pin+--+---------> Battery (+)
-       |                  VIN +--+---------> Battery (+)
-       |                  GND +--+---------> Battery (-)
-       +-------------------------+
-## 📚 Libraries Used
-Install these libraries from Arduino IDE Library Manager:
-- `Adafruit GFX Library`
-- `Adafruit SSD1306`
-- `OneButton`
-- `ArduinoOTA` (Built-in)
-- `ESP8266WiFi` (Built-in)
+1.  **Microcontroller:** ESP8266 (NodeMCU / Wemos D1 Mini) or ESP32.
+2.  **Display:** 0.96" OLED I2C (SSD1306 Driver).
+3.  **Control:** 1x Push Button.
+4.  **Battery:** 3.7V Li-ion/LiPo (with resistor divider on A0 for monitoring).
 
-## 🚀 How to Install
-1. Open the `.ino` file in Arduino IDE.
-2. Install the required libraries.
-3. Update your **WiFi SSID & Password** in the code:
-   ```cpp
-   const char* WIFI_SSID = "YOUR_WIFI_NAME";
-   const char* WIFI_PASS = "YOUR_WIFI_PASSWORD";
-4.Upload to your ESP8266.
-5.Enjoy your Smartwatch!
+## 🔌 Circuit / Pinout
+
+| Component | ESP Pin (Default) | Description |
+| :--- | :--- | :--- |
+| **OLED SDA** | D2 (GPIO 4) | I2C Data |
+| **OLED SCL** | D1 (GPIO 5) | I2C Clock |
+| **Button** | D5 (GPIO 14) | Active Low / OneButton |
+| **Battery** | A0 (ADC 0) | Voltage Divider Input |
+
+## ⚙️ Configuration
+
+Before uploading, open the firmware file and edit the **[1] CONFIGURATION** section:
+
+```cpp
+// 1. Enter your Wi-Fi Details
+const char* WIFI_SSID     = "YOUR_WIFI_NAME";
+const char* WIFI_PASS     = "YOUR_WIFI_PASSWORD"; 
+
+// 2. Enter your Location (for Weather/Sun data)
+// Get coordinates from: [https://www.latlong.net/](https://www.latlong.net/)
+const String GEO_LAT      = "00.00"; 
+const String GEO_LON      = "00.00";
+🎮 Controls (Single Button)
+Single Click: Wake screen / Next Menu Item / Action in App.
+
+Double Click: Previous Menu Item / Back / Exit App.
+
+Long Press: Select Menu Item / Sync Time / Reset Stopwatch.
+
+📦 Libraries Used
+ESP8266WiFi / ESP8266HTTPClient (Built-in)
+
+Adafruit GFX & SSD1306: For OLED display handling.
+
+OneButton: For advanced button click detection.
+
+ArduinoOTA: For wireless updates.
+
+📝 Changelog
+v2.0 (Latest)
+
+Code cleanup for public release.
+
+Added Daylight Duration to Day Stats.
+
+Optimized UI (Removed cluttered lines).
+
+Generic configuration for GitHub.
+
+v1.0 - v1.9
+
+Initial development and feature additions.
