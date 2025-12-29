@@ -41,8 +41,9 @@ A custom, feature-rich smartwatch firmware built for ESP8266 (NodeMCU/D1 Mini) a
 | :--- | :--- | :--- |
 | **OLED SDA** | D2 (GPIO 4) | I2C Data |
 | **OLED SCL** | D1 (GPIO 5) | I2C Clock |
-| **Button** | D5 (GPIO 14) | Active Low / OneButton |
-| **Battery** | A0 (ADC 0) | Voltage Divider Input |
+| **Button** | D5 (GPIO 14) | Active Low / OneButton One pin to D5 and second pin to gnd |
+| **Battery** | positive 5v and Gnd to Gnd  | 
+| **Voltage divider** | 330K resistor 3.3v to A0 and 47k resisito Gnd to A0 for Battry percentage |
 
 ## ⚙️ Configuration
 
